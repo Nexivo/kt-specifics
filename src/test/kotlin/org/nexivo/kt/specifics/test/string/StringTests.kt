@@ -27,7 +27,7 @@ class StringTests : Spek({
 
             it ("should result in calling the block of code") {
 
-                val actual:   String = subject notBlank  { it.toUpperCase() }
+                val actual:   String = subject notBlank String::toUpperCase
                 val expected: String = "THIS STRING IS NEITHER NULL NOR BLANK"
 
                 actual.should.be.equal(expected)
@@ -48,7 +48,7 @@ class StringTests : Spek({
 
             it ("should result in skipping the block of code and return an empty string") {
 
-                val actual:   String = subject notBlank  { it.toUpperCase() }
+                val actual:   String = subject notBlank String::toUpperCase
                 val expected: String = ""
 
                 actual.should.be.equal(expected)
@@ -69,7 +69,7 @@ class StringTests : Spek({
 
             it("should result in skipping the block of code and return an empty string") {
 
-                val actual:   String = subject notBlank { it.toUpperCase() }
+                val actual:   String = subject notBlank String::toUpperCase
                 val expected: String = ""
 
                 actual.should.be.equal(expected)
