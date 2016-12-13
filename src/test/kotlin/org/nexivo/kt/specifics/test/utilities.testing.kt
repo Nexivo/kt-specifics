@@ -1,9 +1,5 @@
 package org.nexivo.kt.specifics.test
 
-import mockit.Mock
-import mockit.MockUp
-import java.io.InputStream
-
 inline fun <reified T : Any> className() = T::class.java.simpleName!!
 
 inline fun <reified T> throws(block: () -> Unit)
