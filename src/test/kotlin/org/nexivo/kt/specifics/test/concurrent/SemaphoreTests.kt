@@ -74,42 +74,39 @@ class SemaphoreTests: Spek({
                 }
             }
 
-            on ("calling the \"if not blocked\" dsl method") {
+            given ("a blocked \"Semaphore\", calling the \"if not blocked\" dsl method") {
 
-                given("a blocked \"Semaphore\"") {
+                it("should skip the block") {
 
-                    it("should skip the block ") {
+                    val subject: Semaphore = Semaphore(1) acquire 1
+                    val expected: Boolean   = false
+                    var actual:   Boolean   = false
 
-                        val subject: Semaphore = Semaphore(1) acquire 1
-                        val expected: Boolean   = false
-                        var actual:   Boolean   = false
-
-                        subject `if not blocked` {
-                            actual = true
-                        }
-
-                        actual.should.be.equal(expected)
-
-                        subject.release()
-
-                        actual.should.be.equal(expected)
+                    subject `if not blocked` {
+                        actual = true
                     }
+
+                    actual.should.be.equal(expected)
+
+                    subject.release()
+
+                    actual.should.be.equal(expected)
                 }
+            }
 
-                given("a non-blocked \"Semaphore\"") {
+            given("a non-blocked \"Semaphore\", calling the \"if not blocked\" dsl method") {
 
-                    it("should not skip the block ") {
+                it("should not skip the block ") {
 
-                        val subject: Semaphore = Semaphore(1)
-                        var actual:   Boolean   = false
-                        val expected: Boolean   = true
+                    val subject: Semaphore = Semaphore(1)
+                    var actual:   Boolean   = false
+                    val expected: Boolean   = true
 
-                        subject `if not blocked` {
-                            actual = true
-                        }
-
-                        actual.should.be.equal(expected)
+                    subject `if not blocked` {
+                        actual = true
                     }
+
+                    actual.should.be.equal(expected)
                 }
             }
         }

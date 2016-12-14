@@ -12,35 +12,32 @@ class ThrowableTests : Spek({
 
     describe("\"Throwable\" dsl behavior") {
 
-        on("calling \"parse message\" on a \"Throwable\"") {
+        given("a null \"Throwable\", calling \"parse message\" on a \"Throwable\"") {
 
-            given("a null \"Throwable\"") {
+            it("should result in a null value") {
 
-                it("should result in a null value") {
-
-                    val subject: Throwable? = null
-                    val actual:  String?    = subject `parse message` {
-                        exception, message ->
-
-                        "[$exception] \"$message\""
-                    }
-
-                    actual.should.be.`null`
-                }
-            }
-
-            given("a non-null \"Throwable\n") {
-
-                val subject: Throwable  = TestException("Lorem ipsum dolor sit amet, consectetur adipiscing elit.")
+                val subject: Throwable? = null
                 val actual:  String?    = subject `parse message` {
                     exception, message ->
 
                     "[$exception] \"$message\""
                 }
-                val expected: String    = "[TestException] \"Lorem ipsum dolor sit amet, consectetur adipiscing elit.\""
 
-                actual.should.be.equal(expected)
+                actual.should.be.`null`
             }
+        }
+
+        given("a non-null \"Throwable\", calling \"parse message\" on a \"Throwable\"") {
+
+            val subject: Throwable  = TestException("Lorem ipsum dolor sit amet, consectetur adipiscing elit.")
+            val actual:  String?    = subject `parse message` {
+                exception, message ->
+
+                "[$exception] \"$message\""
+            }
+            val expected: String    = "[TestException] \"Lorem ipsum dolor sit amet, consectetur adipiscing elit.\""
+
+            actual.should.be.equal(expected)
         }
     }
 }) {

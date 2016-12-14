@@ -5,10 +5,10 @@ import org.jetbrains.spek.api.Spek
 import org.jetbrains.spek.api.dsl.describe
 import org.jetbrains.spek.api.dsl.given
 import org.jetbrains.spek.api.dsl.it
-import org.nexivo.kt.specifics.flow.ifNotNull
+import org.nexivo.kt.specifics.flow.ifNotSet
+import org.nexivo.kt.specifics.flow.ifSet
+import org.nexivo.kt.specifics.flow.ifValid
 import org.nexivo.kt.specifics.flow.otherwise
-import org.nexivo.kt.specifics.flow.whenNotNull
-import org.nexivo.kt.specifics.flow.whenNull
 
 class NullableTests: Spek({
 
@@ -63,16 +63,16 @@ class NullableTests: Spek({
         }
     }
 
-    describe("\"whenNull\" control flow behavior") {
+    describe("\"ifNotSet\" control flow behavior") {
 
         given("a null value") {
 
-            it("should evaluate the \"whenNull\" block of code") {
+            it("should evaluate the \"ifNotSet\" block of code") {
 
                 val subject: String?  = null
                 var actual:  Boolean? = null
 
-                subject?.capitalize() whenNull { actual = echoCode(true) }
+                subject?.capitalize() ifNotSet { actual = echoCode(true) }
 
                 actual.should.be.`true`
                 actual.should.not.be.`null`
@@ -81,12 +81,12 @@ class NullableTests: Spek({
 
         given("a non-null nullable value") {
 
-            it("should NOT evaluate the \"whenNull\" block of code") {
+            it("should NOT evaluate the \"ifNotSet\" block of code") {
 
                 val subject: String?  = "Pha Pha Fooey!"
                 var actual:  Boolean? = null
 
-                subject?.capitalize() whenNull { actual = echoCode(false) }
+                subject?.capitalize() ifNotSet { actual = echoCode(false) }
 
                 actual.should.be.`null`
                 actual.should.not.be.`false`
@@ -94,16 +94,16 @@ class NullableTests: Spek({
         }
     }
     
-    describe("\"whenNotNull\" control flow behavior") {
+    describe("\"ifSet\" control flow behavior") {
 
         given("a null value") {
 
-            it("should NOT evaluate the \"whenNotNull\" block of code") {
+            it("should NOT evaluate the \"ifSet\" block of code") {
 
                 val subject: String?  = null
                 var actual:  Boolean? = null
 
-                subject?.capitalize() whenNotNull {
+                subject?.capitalize() ifSet {
                     actual = false
                 }
 
@@ -114,12 +114,12 @@ class NullableTests: Spek({
 
         given("a non-null nullable value") {
 
-            it("should evaluate the \"whenNotNull\" block of code") {
+            it("should evaluate the \"ifSet\" block of code") {
 
                 val subject: String?  = "Pha Pha Fooey!"
                 var actual:  Boolean? = null
 
-                subject?.capitalize() whenNotNull {
+                subject?.capitalize() ifSet {
                     actual = true
                 }
 
@@ -129,14 +129,14 @@ class NullableTests: Spek({
         }
     }
 
-    describe("\"ifNotNull\" control flow behavior") {
+    describe("\"otherwise\" control flow behavior") {
 
         given("a null value") {
 
-            it("should evaluate the \"ifNotNul\" expression") {
+            it("should evaluate the \"ifValid\" expression") {
 
                 val subject: String?  = null
-                val actual:  Boolean? = subject?.capitalize() ifNotNull  { echoCode(true) }
+                val actual:  Boolean? = subject?.capitalize() ifValid { echoCode(true) }
 
                 actual.should.be.`null`
                 actual.should.not.be.`true`
@@ -145,10 +145,10 @@ class NullableTests: Spek({
 
         given("a non-null nullable value") {
 
-            it("should evaluate the \"ifNotNul\" expression") {
+            it("should evaluate the \"ifValid\" expression") {
 
                 val subject: String? = "Pha Pha Fooey!"
-                val actual:  Int?    = subject ifNotNull { echoCode(42) }
+                val actual:  Int?    = subject ifValid { echoCode(42) }
                 val expected: Int    = 42
 
                 actual.should.be.equal(expected)

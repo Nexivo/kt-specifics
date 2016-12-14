@@ -8,27 +8,27 @@ import org.jetbrains.spek.api.dsl.describe
 import org.jetbrains.spek.api.dsl.given
 import org.jetbrains.spek.api.dsl.it
 import org.jetbrains.spek.api.dsl.xdescribe
-import org.nexivo.kt.specifics.flow.whenNull
+import org.nexivo.kt.specifics.flow.ifNotSet
 import org.nexivo.kt.specifics.system.environmentValue
 
 private var mockedSystem: MockUp<System>? = null
 
 class EnvironmentVariableTests: Spek({
 
-    mockedSystem whenNull {
+    mockedSystem ifNotSet {
         mockedSystem = object : MockUp<System>() {
             @Mock
             fun getenv(key: String): String =
-                    when (key) {
-                        "TEST_VALUE_ONE" -> "one"
-                        "TEST_VALUE_TWO" -> "two"
-                        "TEST_VALUE_1" -> "1"
-                        "TEST_VALUE_EMPTY" -> ""
-                        "TEST_VALUE_BLANK" -> "   "
-                        "TEST_VALUE_2_BLANK" -> "  "
-                        "TEST_VALUE_2_EMPTY" -> ""
-                        else -> ""
-                    }
+                when (key) {
+                    "TEST_VALUE_ONE"     -> "one"
+                    "TEST_VALUE_TWO"     -> "two"
+                    "TEST_VALUE_1"       -> "1"
+                    "TEST_VALUE_EMPTY"   -> ""
+                    "TEST_VALUE_BLANK"   -> "   "
+                    "TEST_VALUE_2_BLANK" -> "  "
+                    "TEST_VALUE_2_EMPTY" -> ""
+                    else -> ""
+                }
         }
     }
 

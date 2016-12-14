@@ -4,6 +4,10 @@ infix fun String?.otherwise (defaultValue: String): String = if (this.isNullOrBl
 
 inline infix fun String?.notBlank (block: (String) -> String): String = if (this.isNullOrBlank()) "" else block(this!!)
 
+inline infix fun String?.ifNotBlank (block: (String) -> Unit): Unit { if (!this.isNullOrBlank()) { block(this!!) } }
+
+inline infix fun String?.ifBlank (block: (String) -> Unit): Unit { if (this.isNullOrBlank()) { block(this!!) } }
+
 infix fun Int.pluralize(pluralized: String): String = if ( this != 1 ) pluralized else ""
 
 fun Int.pluralize(singular: String, pluralized: String): String = if ( this != 1 ) pluralized else singular
